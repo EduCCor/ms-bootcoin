@@ -34,7 +34,7 @@ public class BootCoinServicesImpl implements IBootCoinServices {
         return yankiServiceDto.findByCustomerIdentityNumber(bootCoinDocument.getCustomerIdentityNumber()).flatMap(c -> {
             if(c.getCustomerIdentityNumber() == null){
                 log.info("No puede crearse una cuenta BootCoin sin tener una cuenta de Yanki");
-                return Mono.error(new RuntimeException("ERROR CREATE ACCOUNT BOOTCOIN"));
+                return Mono.just(BootCoinDocument.builder().build());
             }
 
             bootCoinDocument.setTypeOfAccount("BOOT_COIN");

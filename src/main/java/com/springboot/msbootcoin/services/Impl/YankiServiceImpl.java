@@ -28,7 +28,8 @@ public class YankiServiceImpl implements IYankiServiceDto {
                 .uri("http://localhost:8078/api/currentYanki/number/" + customerIdentityNumber)
                 .accept(MediaType.APPLICATION_JSON)
                 .exchangeToMono(clientResponse -> clientResponse.bodyToMono(YankiDocumentDto.class))
-                .doOnNext(c -> log.info("Account Yanki", c.getCustomerIdentityNumber()));
+                .doOnNext(c -> log.info("Account Yanki", c.getCustomerIdentityNumber()))
+                .switchIfEmpty(Mono.just(YankiDocumentDto.builder().id(null).build()));
     }
 
     @Override
